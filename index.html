@@ -29,9 +29,59 @@
             .match-box img { height:120px; }
             .seo-text { padding:12px; }
         }
+
+        /* баннер */
+        .promo-banner {
+            background:#111827;
+            color:#fff;
+            padding:18px 12px;
+            text-align:center;
+        }
+        .promo-inner {
+            max-width:1000px;
+            margin:0 auto;
+            display:flex;
+            flex-wrap:wrap;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+        }
+        .promo-text {
+            font-size:1.05em;
+        }
+        .promo-code {
+            font-weight:700;
+            color:#facc15;
+        }
+        .promo-btn {
+            display:inline-block;
+            background:#22c55e;
+            color:#111;
+            font-weight:700;
+            padding:9px 20px;
+            border-radius:999px;
+            text-decoration:none;
+            white-space:nowrap;
+        }
+        .promo-btn:hover {
+            background:#16a34a;
+        }
+        @media(max-width:700px){
+            .promo-inner{justify-content:center; text-align:center;}
+        }
     </style>
 </head>
 <body>
+
+    <div class="promo-banner">
+        <div class="promo-inner">
+            <div class="promo-text">
+                Бонус до 25 000 ₽ в Melbet по промокоду <span class="promo-code">GRAND25</span>
+            </div>
+            <a class="promo-btn" href="https://clck.ru/3Mo7a2" target="_blank">Забрать бонус</a>
+        </div>
+    </div>
+
     <header>
         <h1>Лига чемпионов: онлайн-трансляции <br>26 ноября 2025</h1>
         <p>Смотрите футбол онлайн, следите за результатами и главными матчами вечера</p>
