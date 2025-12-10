@@ -107,16 +107,15 @@
             z-index: 1;
         }
 
-        /* Чёрная плашка в правом нижнем углу поверх ифрейма */
+        /* Чёрная плашка в правом нижнем углу поверх ифрейма, блокирует клики по fullscreen */
         .video-hide-fs-btn {
             position: absolute;
             right: 0;
             bottom: 0;
-            width: 60px;
-            height: 40px;
+            width: 50px;
+            height: 32px;
             background: #000;
             z-index: 5;
-            pointer-events: none; /* чтобы не мешала кликам по видео */
         }
 
         .video-support-qr {
@@ -312,10 +311,10 @@
             padding: 8px 12px;
         }
 
-        /* Плашка тоже остаётся в правом нижнем в полноэкранном */
+        /* Меньшая плашка в полноэкранном режиме, тоже блокирует клики */
         .video-container:fullscreen .video-hide-fs-btn {
-            width: 80px;
-            height: 50px;
+            width: 50px;
+            height: 32px;
             right: 0;
             bottom: 0;
         }
@@ -359,7 +358,7 @@
                         referrerpolicy="no-referrer">
                 </iframe>
 
-                <!-- Чёрная плашка, закрывающая иконку fullscreen -->
+                <!-- Чёрная плашка, закрывающая иконку fullscreen и блокирующая клик -->
                 <div class="video-hide-fs-btn"></div>
 
                 <div class="video-support-qr">
@@ -396,11 +395,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!document.fullscreenElement) {
             if (container.requestFullscreen) {
                 container.requestFullscreen();
-            } else if (container.webkitRequestFullscreen) {
+            } else if (container.webkitRequestFullscreen) { // Safari
                 container.webkitRequestFullscreen();
-            } else if (container.mozRequestFullScreen) {
+            } else if (container.mozRequestFullScreen) { // Old Firefox
                 container.mozRequestFullScreen();
-            } else if (container.msRequestFullscreen) {
+            } else if (container.msRequestFullscreen) { // Old IE/Edge
                 container.msRequestFullscreen();
             }
         } else {
