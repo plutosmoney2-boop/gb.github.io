@@ -51,7 +51,6 @@
             padding: 20px;
         }
 
-        /* Вводный текст о матче */
         .intro-text {
             max-width: 900px;
             margin: 0 auto 20px auto;
@@ -83,7 +82,6 @@
             gap: 20px;
         }
 
-        /* Контейнер для видео + QR, уходит в fullscreen */
         .video-container {
             position: relative;
             flex: 1 1 auto;
@@ -109,7 +107,18 @@
             z-index: 1;
         }
 
-        /* QR в правом верхнем углу видео */
+        /* Чёрная плашка в правом нижнем углу поверх ифрейма */
+        .video-hide-fs-btn {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 60px;
+            height: 40px;
+            background: #000;
+            z-index: 5;
+            pointer-events: none; /* чтобы не мешала кликам по видео */
+        }
+
         .video-support-qr {
             position: absolute;
             top: 10px;
@@ -152,7 +161,6 @@
             text-decoration: underline;
         }
 
-        /* Кнопка своего fullscreen в левом верхнем углу */
         .video-fs-btn {
             position: absolute;
             top: 10px;
@@ -255,7 +263,7 @@
             }
         }
 
-        /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОГО РЕЖИМА КОНТЕЙНЕРА */
+        /* Полноэкранный режим контейнера */
 
         .video-container:fullscreen {
             width: 100%;
@@ -278,7 +286,6 @@
             height: 100%;
         }
 
-        /* Увеличенная плашка в полноэкране */
         .video-container:fullscreen .video-support-qr {
             top: 20px;
             right: 20px;
@@ -298,12 +305,19 @@
             font-size: 12px;
         }
 
-        /* Можно поменять текст/размер кнопки fullscreen в полноэкране */
         .video-container:fullscreen .video-fs-btn {
             top: 20px;
             left: 20px;
             font-size: 12px;
             padding: 8px 12px;
+        }
+
+        /* Плашка тоже остаётся в правом нижнем в полноэкранном */
+        .video-container:fullscreen .video-hide-fs-btn {
+            width: 80px;
+            height: 50px;
+            right: 0;
+            bottom: 0;
         }
     </style>
 </head>
@@ -334,21 +348,20 @@
     </div>
 
     <div class="main-block">
-        <!-- Контейнер, который будет уходить в fullscreen -->
         <div class="video-container">
-            <!-- Кнопка своего полноэкранного режима -->
             <button class="video-fs-btn" type="button">
                 На весь экран
             </button>
 
             <div class="video-wrapper">
-                <!-- ТВОЙ СТРИМ -->
                 <iframe src="https://playball10.com/p2p-reserv/10tka9.php"
                         allowfullscreen
                         referrerpolicy="no-referrer">
                 </iframe>
 
-                <!-- QR поверх видео в правом верхнем углу -->
+                <!-- Чёрная плашка, закрывающая иконку fullscreen -->
+                <div class="video-hide-fs-btn"></div>
+
                 <div class="video-support-qr">
                     <div class="video-support-qr-title">Поддержать автора</div>
                     <div class="video-support-qr-img">
@@ -383,11 +396,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!document.fullscreenElement) {
             if (container.requestFullscreen) {
                 container.requestFullscreen();
-            } else if (container.webkitRequestFullscreen) { // Safari
+            } else if (container.webkitRequestFullscreen) {
                 container.webkitRequestFullscreen();
-            } else if (container.mozRequestFullScreen) { // Old Firefox
+            } else if (container.mozRequestFullScreen) {
                 container.mozRequestFullScreen();
-            } else if (container.msRequestFullscreen) { // Old IE/Edge
+            } else if (container.msRequestFullscreen) {
                 container.msRequestFullscreen();
             }
         } else {
