@@ -102,12 +102,47 @@
             z-index: 1;
         }
 
-        /* Прозрачный фон поверх видео */
-        .video-overlay-blocker {
+        /* QR в правом верхнем углу видео */
+        .video-support-qr {
             position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0); /* полностью прозрачный, можно сделать 0.1–0.2 при необходимости */
-            z-index: 5;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .video-support-qr-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #ffde59;
+            text-align: center;
+        }
+
+        .video-support-qr-img {
+            width: 70px;
+            height: 70px;
+            background: #fff;
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        .video-support-qr-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-support-qr-link {
+            font-size: 11px;
+            color: #ffcc00;
+            text-decoration: underline;
         }
 
         .side-panel {
@@ -229,8 +264,16 @@
                     referrerpolicy="no-referrer">
             </iframe>
 
-            <!-- Прозрачный фон поверх видео -->
-            <div class="video-overlay-blocker"></div>
+            <!-- QR поверх видео в правом верхнем углу -->
+            <div class="video-support-qr">
+                <div class="video-support-qr-title">Поддержать автора</div>
+                <div class="video-support-qr-img">
+                    <img src="https://image2url.com/images/1765383032320-a1182741-b7e6-4da9-91c4-2e78ad065e8c.png" alt="QR код">
+                </div>
+                <a href="https://www.donationalerts.com/r/gorra" class="video-support-qr-link" target="_blank" rel="noopener noreferrer">
+                    Открыть ссылку
+                </a>
+            </div>
         </div>
 
         <div class="side-panel">
