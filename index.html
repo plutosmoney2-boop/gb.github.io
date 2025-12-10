@@ -83,7 +83,8 @@
             gap: 20px;
         }
 
-        .video-wrapper {
+        /* Контейнер для видео + QR, уходит в fullscreen */
+        .video-container {
             position: relative;
             flex: 1 1 auto;
             max-width: 1200px;
@@ -91,8 +92,14 @@
             overflow: hidden;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
             border: 2px solid #222;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
             padding-top: 56.25%; /* 16:9 */
         }
+
         .video-wrapper iframe {
             position: absolute;
             inset: 0;
@@ -143,6 +150,25 @@
             font-size: 11px;
             color: #ffcc00;
             text-decoration: underline;
+        }
+
+        /* Кнопка своего fullscreen в левом верхнем углу */
+        .video-fs-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            border: 1px solid #666;
+        }
+
+        .video-fs-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .side-panel {
@@ -228,6 +254,57 @@
                 font-size: 16px;
             }
         }
+
+        /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОГО РЕЖИМА КОНТЕЙНЕРА */
+
+        .video-container:fullscreen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            border-radius: 0;
+            border: none;
+        }
+
+        .video-container:fullscreen .video-wrapper {
+            width: 100%;
+            height: 100%;
+            padding-top: 0;
+        }
+
+        .video-container:fullscreen .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Увеличенная плашка в полноэкране */
+        .video-container:fullscreen .video-support-qr {
+            top: 20px;
+            right: 20px;
+            padding: 12px;
+        }
+
+        .video-container:fullscreen .video-support-qr-img {
+            width: 110px;
+            height: 110px;
+        }
+
+        .video-container:fullscreen .video-support-qr-title {
+            font-size: 13px;
+        }
+
+        .video-container:fullscreen .video-support-qr-link {
+            font-size: 12px;
+        }
+
+        /* Можно поменять текст/размер кнопки fullscreen в полноэкране */
+        .video-container:fullscreen .video-fs-btn {
+            top: 20px;
+            left: 20px;
+            font-size: 12px;
+            padding: 8px 12px;
+        }
     </style>
 </head>
 <body>
@@ -257,22 +334,30 @@
     </div>
 
     <div class="main-block">
-        <div class="video-wrapper">
-            <!-- ТВОЙ СТРИМ -->
-            <iframe src="https://playball10.com/p2p-reserv/10tka9.php"
-                    allowfullscreen
-                    referrerpolicy="no-referrer">
-            </iframe>
+        <!-- Контейнер, который будет уходить в fullscreen -->
+        <div class="video-container">
+            <!-- Кнопка своего полноэкранного режима -->
+            <button class="video-fs-btn" type="button">
+                На весь экран
+            </button>
 
-            <!-- QR поверх видео в правом верхнем углу -->
-            <div class="video-support-qr">
-                <div class="video-support-qr-title">Поддержать автора</div>
-                <div class="video-support-qr-img">
-                    <img src="https://image2url.com/images/1765383032320-a1182741-b7e6-4da9-91c4-2e78ad065e8c.png" alt="QR код">
+            <div class="video-wrapper">
+                <!-- ТВОЙ СТРИМ -->
+                <iframe src="https://playball10.com/p2p-reserv/10tka9.php"
+                        allowfullscreen
+                        referrerpolicy="no-referrer">
+                </iframe>
+
+                <!-- QR поверх видео в правом верхнем углу -->
+                <div class="video-support-qr">
+                    <div class="video-support-qr-title">Поддержать автора</div>
+                    <div class="video-support-qr-img">
+                        <img src="https://image2url.com/images/1765383032320-a1182741-b7e6-4da9-91c4-2e78ad065e8c.png" alt="QR код">
+                    </div>
+                    <a href="https://www.donationalerts.com/r/gorra" class="video-support-qr-link" target="_blank" rel="noopener noreferrer">
+                        Открыть ссылку
+                    </a>
                 </div>
-                <a href="https://www.donationalerts.com/r/gorra" class="video-support-qr-link" target="_blank" rel="noopener noreferrer">
-                    Открыть ссылку
-                </a>
             </div>
         </div>
 
@@ -288,5 +373,46 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.video-container');
+    const fsBtn = document.querySelector('.video-fs-btn');
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            if (container.requestFullscreen) {
+                container.requestFullscreen();
+            } else if (container.webkitRequestFullscreen) { // Safari
+                container.webkitRequestFullscreen();
+            } else if (container.mozRequestFullScreen) { // Old Firefox
+                container.mozRequestFullScreen();
+            } else if (container.msRequestFullscreen) { // Old IE/Edge
+                container.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }
+
+    fsBtn.addEventListener('click', toggleFullscreen);
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement === container) {
+            fsBtn.textContent = 'Выйти из полноэкрана';
+        } else {
+            fsBtn.textContent = 'На весь экран';
+        }
+    });
+});
+</script>
 </body>
 </html>
